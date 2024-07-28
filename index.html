@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Form</title>
+    <style>
+        h1{
+            display: flex;
+            justify-content: center;
+        }
+        form{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 100px;
+        }
+        input{
+            height: 2em;
+            width: 20em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Register Form</h1>
+
+    <div>
+        <form id="form">
+            <input type="text" placeholder="Enter Your Full Name"> <br><br>
+            <input type="number" placeholder="Enter Your Phone Number"> <br><br>
+            <input type="email" placeholder="enter your email" id="email"> <br> <br>
+            <input type="password" placeholder="enter your password" id="password"> <br> <br>
+    
+            <button type="submit">Register</button> <br> <br>
+            <a href="./login.html">Already a User?</a>
+        </form>
+    </div>
+
+    
+    <script type="module" src="register.js"></script>
+</body>
+</html>
