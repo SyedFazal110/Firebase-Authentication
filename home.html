@@ -9,11 +9,33 @@
             display: flex;
             justify-content: center;
         }
+        div{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
-    <h1>Home</h1>
-    <button id="logout-btn">Logout</button>
+    
+    <div id="div">
+        <h1>Home</h1>
+
+        <form>
+            <input type="text" id="todo" placeholder="Add your todo">
+            <button id="add-btn">Add</button>
+        </form> <br>
+
+        <ul id="list">
+
+        </ul> <br><br>
+
+
+        <button id="logout-btn">Logout</button>
+    </div>
+        
+
 
     <script type="module" src="home.js"></script>
 </body>
