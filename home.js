@@ -7,7 +7,10 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-  Timestamp
+  Timestamp,
+  query,
+  where,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
 onAuthStateChanged(auth, (user) => {
@@ -25,9 +28,35 @@ const logout = document.querySelector("#logout-btn");
 const todo = document.querySelector("#todo");
 const addBtn = document.querySelector("#add-btn");
 const added = document.querySelector("#data");
+const select = document.querySelector("#select");
+const citiesBtn = document.querySelectorAll(".cities-btn");
+const reset = document.querySelector(".reset");
 
 
-const arr = [];
+
+let arr = [];
+
+
+citiesBtn.forEach((btn)=>{
+  btn.addEventListener("click" , async(event)=>{
+    arr = [];
+    console.log(event.target.innerHTML);
+    
+    const citiesRef = collection(db, "todocollection");
+    
+    const q = query(citiesRef, where("city", "==", event.target.innerHTML));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      arr.push({ ...doc.data(), id: doc.id });
+    });
+    console.log(arr);
+    render();
+  })
+})
+
+reset.addEventListener("click" , getData);
+
 
 logout.addEventListener('click' , ()=>{
     signOut(auth).then(() => {
@@ -44,11 +73,13 @@ addBtn.addEventListener("click",async (event)=>{
   try {
     const docRef = await addDoc(collection(db, "todocollection"), {
       text: todo.value,
+      city: select.value,
       time: Timestamp.fromDate(new Date()),
     });
     console.log("Document written with ID: ", docRef.id);
     arr.push({
       text: todo.value,
+      city: select.value,
       id: docRef.id,
     });
     render();
@@ -61,7 +92,8 @@ addBtn.addEventListener("click",async (event)=>{
 
 
 async function getData() {
-  const querySnapshot = await getDocs(collection(db, "todocollection"));
+  const q = query(collection(db, "todocollection"), orderBy("time", "desc"));
+  const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     arr.push({
       ...doc.data(),
@@ -88,6 +120,8 @@ async function render(){
     <li>${item.text}</li>
     <button class="edit-btn">Edit</button>
     <button class="delete-btn">Delete</button>
+    <p>${item.time ? item.time.toDate() : "no time"}</p>
+    <hr/>
     `
   })
   
